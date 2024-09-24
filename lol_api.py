@@ -19,7 +19,8 @@ def lol_champion():
         title = champion['title']
         allytips = champion['allytips']
         enemytips = champion['enemytips']
-        story = champion['lore']
+        lore = champion['lore']
+        tags = champion['tags']
 
         # get skins and skin image
         skins = champion['skins']
@@ -68,17 +69,18 @@ def lol_champion():
             '2024': {
                  champ: {
                     'title': title,
-                    'story': story,
+                    'story': lore,
+                    'role': tags,
                     'skins': champ_skins,
                     'abilities': champ_abilities,
                     'passive': champ_passive,
-                    'allytips': allytips,
-                    'enemytips': enemytips
+                    'ally tips': allytips,
+                    'enemy tips': enemytips
                 }
             }}])
 
         return champion_data
-        
+
 
 
 
