@@ -1,8 +1,9 @@
 import requests
 from pprint import pprint
 
-
 skin_img_url = 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/'
+
+
 def lol_champion():
     url = 'https://ddragon.leagueoflegends.com/cdn/14.18.1/data/en_US/champion.json'
     response = requests.get(url)
@@ -30,7 +31,7 @@ def lol_champion():
 
             champ_skins.append({
                 'name': skin_name,
-                'image': f'{skin_img_url}{champ}_{skin['num']}.jpg'
+                'image': f'{skin_img_url}{champ}_{skin["num"]}.jpg'
             })
 
         # get abilities
@@ -40,11 +41,13 @@ def lol_champion():
             ability_id = ability['id']
             ability_name = ability['name']
             ability_description = ability['description']
+            ability_image = f'https://ddragon.leagueoflegends.com/cdn/14.13.1/img/spell/{ability_id}.png'
 
             champ_abilities.append({
                 'id': ability_id,
                 'ability': ability_name,
-                'description': ability_description
+                'description': ability_description,
+                'image': ability_image
             })
 
         # get passive
@@ -52,24 +55,32 @@ def lol_champion():
         champ_passive = []
         passive_name = passive['name']
         passive_description = passive['description']
+        passive_img_id = passive['image']['full']
+        passive_image = f'https://ddragon.leagueoflegends.com/cdn/14.13.1/img/passive/{passive_img_id}'
+
         champ_passive.append({
             'name': passive_name,
-            'description': passive_description
-                })
+            'description': passive_description,
+            'image': passive_image
+        })
 
-
-        champion_data = [ {
+        champion_data.append( [{
             '2024': {
-                'champion': champion,
-                'title': title,
-                'story': story,
-                'skins': champ_skins,
-                'abilities': champ_abilities,
-                'passive': champ_passive,
-                'allytips': allytips,
-                'enemytips': enemytips
-            }}]
+                 champ: {
+                    'title': title,
+                    'story': story,
+                    'skins': champ_skins,
+                    'abilities': champ_abilities,
+                    'passive': champ_passive,
+                    'allytips': allytips,
+                    'enemytips': enemytips
+                }
+            }}])
 
-        break
+        return champion_data
+        
+
+
 
 lol_champion()
+
