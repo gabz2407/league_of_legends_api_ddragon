@@ -1,9 +1,10 @@
 import requests
 from pprint import pprint
+from flask import Flask
+app = Flask(__name__)
 
-skin_img_url = 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/'
 
-
+@app.get("/champions")
 def lol_champion():
     url = 'https://ddragon.leagueoflegends.com/cdn/14.18.1/data/en_US/champion.json'
     response = requests.get(url)
@@ -32,7 +33,7 @@ def lol_champion():
 
             champ_skins.append({
                 'name': skin_name,
-                'image': f'{skin_img_url}{champ}_{skin["num"]}.jpg'
+                'image': f'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/{champ}_{skin["num"]}.jpg'
             })
 
         # get abilities
@@ -80,8 +81,6 @@ def lol_champion():
             }}])
 
         return champion_data
-
-
 
 
 lol_champion()
