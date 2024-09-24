@@ -15,7 +15,7 @@ def lol_champion():
         champion_url = f'https://ddragon.leagueoflegends.com/cdn/14.18.1/data/en_US/champion/{champ}.json'
         champion_response = requests.get(champion_url)
         champion = champion_response.json()['data'][champ]
-        # pprint(champion)
+
         # get title, ally tips, enemy tips and lore
         title = champion['title']
         allytips = champion['allytips']
@@ -25,6 +25,7 @@ def lol_champion():
 
         # get skins and skin image
         skins = champion['skins']
+        print(champion)
         champ_skins = []
         for skin in skins:
             skin_name = champ
@@ -66,8 +67,7 @@ def lol_champion():
             'image': passive_image
         })
 
-        champion_data.append( [{
-            '2024': {
+        champion_data.append({
                  champ: {
                     'title': title,
                     'story': lore,
@@ -77,10 +77,10 @@ def lol_champion():
                     'passive': champ_passive,
                     'ally tips': allytips,
                     'enemy tips': enemytips
-                }
-            }}])
+                    }
+                })
 
-        return champion_data
+    return champion_data
 
 
 lol_champion()
