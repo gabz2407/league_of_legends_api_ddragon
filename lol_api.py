@@ -4,7 +4,7 @@ from flask import Flask, jsonify
 application = Flask(__name__)
 
 
-@application.get("/champions")
+@application.route("/champions")
 def lol_champion():
     url = 'https://ddragon.leagueoflegends.com/cdn/14.18.1/data/en_US/champion.json'
     response = requests.get(url)
