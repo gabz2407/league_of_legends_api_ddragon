@@ -1,10 +1,10 @@
 import requests
 from pprint import pprint
 from flask import Flask, jsonify
-app = Flask(__name__)
+application = Flask(__name__)
 
 
-@app.get("/champions")
+@application.get("/champions")
 def lol_champion():
     url = 'https://ddragon.leagueoflegends.com/cdn/14.18.1/data/en_US/champion.json'
     response = requests.get(url)
@@ -82,7 +82,7 @@ def lol_champion():
     return jsonify(champion_data)
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+    application.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
 
 
 
