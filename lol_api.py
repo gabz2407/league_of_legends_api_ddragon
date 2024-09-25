@@ -1,4 +1,5 @@
 import requests
+import os
 from pprint import pprint
 from flask import Flask, jsonify
 application = Flask(__name__)
@@ -82,7 +83,7 @@ def lol_champion():
     return jsonify(champion_data)
 
 if __name__ == "__main__":
-    application.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+    application.run(debug=False, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
 
 
 
