@@ -1,1 +1,0 @@
-gunicorn lol_api:application
