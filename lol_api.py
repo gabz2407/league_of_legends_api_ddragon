@@ -1,6 +1,6 @@
 import requests
 from pprint import pprint
-from flask import Flask
+from flask import Flask, jsonify
 app = Flask(__name__)
 
 
@@ -80,8 +80,9 @@ def lol_champion():
                     }
                 })
 
-    return champion_data
+    return jsonify(champion_data)
 
+# if __name__ == "__main__":
+#     app.run(debug=True)
 
-lol_champion()
 
