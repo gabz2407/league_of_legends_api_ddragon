@@ -1,3 +1,1 @@
-
-web: gunicorn lol_api:application
-
+gunicorn lol_api:application
