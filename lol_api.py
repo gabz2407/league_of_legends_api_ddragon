@@ -2,11 +2,12 @@ import requests
 import os
 from pprint import pprint
 from flask import Flask, jsonify
+from markupsafe import escape
+
 application = Flask(__name__)
 
 
-@application.route("/champions")
-def lol_champion():
+def fetch_data():
     url = 'https://ddragon.leagueoflegends.com/cdn/14.18.1/data/en_US/champion.json'
     response = requests.get(url)
     data = response.json()['data']
@@ -67,20 +68,37 @@ def lol_champion():
             'image': passive_image
         })
 
-        champion_data.append({
-                 champ: {
-                    'title': title,
-                    'story': lore,
-                    'role': tags,
-                    'skins': champ_skins,
-                    'abilities': champ_abilities,
-                    'passive': champ_passive,
-                    'ally tips': allytips,
-                    'enemy tips': enemytips
-                    }
-                })
+        champion_data.append(
+               {'champion': champ,
+                'title': title,
+                'story': lore,
+                'role': tags,
+                'skins': champ_skins,
+                'abilities': champ_abilities,
+                'passive': champ_passive,
+                'ally tips': allytips,
+                'enemy tips': enemytips
+            }
+        )
 
-    return jsonify(champion_data)
+    return champion_data
+
+@application.route("/champions")
+def lol_champions():
+    return jsonify(champ_data)
+
+
+champ_data = fetch_data()
+
+@application.route("/champions/<name>")
+def lol_champion(name):
+    champ_name = escape(name)
+    for c in champ_data:
+        if c['champion'] == champ_name:
+            return jsonify(c)
+    not_found = {'Error': f'Champion {champ_name} not found.'}
+    return jsonify(not_found)
+
 
 if __name__ == "__main__":
     application.run(debug=False, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
