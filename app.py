@@ -5,10 +5,10 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 from markupsafe import escape
 
-application = Flask(__name__)
+app = Flask(__name__)
 
 # allow cross-origin requests from any origin
-CORS(application)
+CORS(app)
 
 def fetch_data():
     url = 'https://ddragon.leagueoflegends.com/cdn/14.18.1/data/en_US/champion.json'
@@ -87,14 +87,14 @@ def fetch_data():
 
     return champion_data
 
-@application.route("/champions")
+@app.route("/champions")
 def lol_champions():
     return jsonify(champ_data)
 
 
 champ_data = fetch_data()
 
-@application.route("/champions/<name>")
+@app.route("/champions/<name>")
 def lol_champion(name):
     champ_name = escape(name)
     for c in champ_data:
@@ -105,7 +105,7 @@ def lol_champion(name):
 
 
 if __name__ == "__main__":
-    application.run(debug=False, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+    app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
 
 
 
