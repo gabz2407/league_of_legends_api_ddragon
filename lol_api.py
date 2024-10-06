@@ -2,10 +2,13 @@ import requests
 import os
 from pprint import pprint
 from flask import Flask, jsonify
+from flask_cors import CORS
 from markupsafe import escape
 
 application = Flask(__name__)
 
+# allow cross-origin requests from any origin
+CORS(application)
 
 def fetch_data():
     url = 'https://ddragon.leagueoflegends.com/cdn/14.18.1/data/en_US/champion.json'
@@ -18,7 +21,7 @@ def fetch_data():
         champion_response = requests.get(champion_url)
         champion = champion_response.json()['data'][champ]
 
-        # get title, ally tips, enemy tips and lore
+        # get title, ally tips, enemy tips, lore and tags
         title = champion['title']
         allytips = champion['allytips']
         enemytips = champion['enemytips']
@@ -68,6 +71,7 @@ def fetch_data():
             'image': passive_image
         })
 
+        # append info into dictionary
         champion_data.append(
                {'champion': champ,
                 'title': title,
