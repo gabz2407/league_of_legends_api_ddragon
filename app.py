@@ -80,8 +80,8 @@ def fetch_data():
                 'skins': champ_skins,
                 'abilities': champ_abilities,
                 'passive': champ_passive,
-                'ally tips': allytips,
-                'enemy tips': enemytips
+                'ally_tips': allytips,
+                'enemy_tips': enemytips
             }
         )
 
